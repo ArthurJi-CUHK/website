@@ -1,0 +1,19 @@
+/* A quiet voyage across the page; all motion follows ordinary browser scrolling. */
+#progress{height:27px;width:100%;background:transparent;pointer-events:none;z-index:60;overflow:hidden;color:#71b5ac}
+.voyage-wave{position:absolute;width:100%;height:9px;bottom:0;opacity:.6}
+.voyage-wave path{stroke:currentColor;stroke-width:1;fill:none}
+#voyageFill{position:absolute;bottom:0;left:0;width:100%;height:2px;background:currentColor;transform-origin:left;transform:scaleX(0)}
+#voyageBoat{position:absolute;top:0;left:0;width:29px;height:27px;will-change:transform;filter:drop-shadow(0 1px 3px #09232d35)}
+#voyageBoat .sail{fill:#f7e5c8;stroke:#608d8a;stroke-width:.65}#voyageBoat .hull{fill:#68b0a6}
+.hero h1{margin-bottom:0}.cn-name{font:italic 24px/1.3 var(--serif);letter-spacing:.025em;margin:6px 0 30px;color:#bad7d3}
+.orbit-label{color:#e9fff7;border:1px solid #b1ded0a8;background:#123947e6;box-shadow:0 10px 35px #05192338;isolation:isolate}
+html[data-theme="day"] .orbit-label{color:#104e51;border-color:#448e84;background:#f0fcf6f2;box-shadow:0 8px 32px #224e4626,inset 0 0 0 5px #dbeee5}
+html[data-theme="day"] .orbit-label small{color:#266665}
+html[data-theme="day"] .hero .position,html[data-theme="day"] .hero-notes,html[data-theme="day"] .dive{color:#476c72}
+html[data-theme="day"] nav a:hover{color:#176a69}
+html[data-theme="day"] #progress{color:#246c67}
+.privacy-actions{display:flex;gap:22px;align-items:center;flex-wrap:wrap;margin:25px 0 18px}
+.privacy-policy{font-size:11px;color:var(--accent);text-decoration:underline}#privacyExtra{margin-top:18px}
+#lifeGallery{position:relative;margin-top:55px;isolation:isolate}
+@media(max-width:680px){#lifeGallery{margin-top:35px}.hero h1{font-size:61px}.cn-name{font-size:23px}.orbit-label{right:-24px}footer #privacy{padding:0}}
+@media print{#progress,#lifeGallery,.research-demo,.cohort-stats,.hk-visual{display:none!important}}

@@ -1,0 +1,22 @@
+#visitorMap:not([data-visitor-map-ready="true"]), #visitorMap[hidden], #visitorMap [hidden] { display: none !important; }
+#visitorMap { width: 100%; flex-basis: 100%; margin: 0 0 28px; color: var(--ink, #142d37); }
+.vm-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 360px); gap: 30px; align-items: center; padding: 28px; border: 1px solid var(--line, #d8dfdb); border-radius: 12px; background: var(--soft, #e9eeea); }
+.vm-eyebrow { margin: 0 0 12px; color: var(--accent, #176a69); font-size: 9px; letter-spacing: .18em; line-height: 1.5; }
+.vm-title { margin: 0 0 14px; font-size: clamp(23px, 2.4vw, 30px); line-height: 1.2; }
+.vm-intro { margin: 0 0 14px; color: var(--ink, #142d37); font-size: 13px; line-height: 1.65; }
+.vm-disclosure { margin: 0; color: var(--muted, #63757a); font-size: 11px; line-height: 1.65; }
+.vm-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 12px; }
+#visitorMap .vm-button { min-height: 40px; padding: 9px 13px; border: 1px solid var(--accent, #176a69); border-radius: 5px; background: var(--accent, #176a69); color: #fff; font: inherit; font-size: 11px; line-height: 1.5; cursor: pointer; }
+#visitorMap .vm-button-secondary { background: transparent; color: var(--accent, #176a69); }
+#visitorMap .vm-button:disabled { opacity: .55; cursor: not-allowed; }
+.vm-status { margin: 0 0 10px; color: var(--muted, #63757a); font-size: 11px; line-height: 1.6; }
+.vm-link { display: inline-block; margin: 6px 0; color: var(--accent, #176a69); font-size: 11px; text-underline-offset: 3px; text-decoration: underline; }
+.vm-details { margin-top: 8px; color: var(--muted, #63757a); font-size: 10px; line-height: 1.65; }
+.vm-details summary { cursor: pointer; min-height: 30px; padding: 5px 0; }
+.vm-details p { margin: 9px 0; }
+.vm-host { width: 100%; min-width: 0; max-width: 360px; justify-self: center; }
+.vm-frame { display: block; width: 100%; border: 0; background: transparent; }
+.vm-card:not(:has(.vm-host:not([hidden]))) { grid-template-columns: minmax(0, 1fr); }
+#visitorMap a:focus-visible, #visitorMap button:focus-visible, #visitorMap summary:focus-visible { outline: 3px solid #bb8d51; outline-offset: 4px; }
+@media (max-width: 680px) { .vm-card { grid-template-columns: 1fr; gap: 20px; padding: 22px 18px; } .vm-title { font-size: 25px; } .vm-disclosure { font-size: 11px; } .vm-host { max-width: min(360px, 100%); } }
+@media print { #visitorMap { display: none !important; } }
