@@ -5,7 +5,6 @@
   const words = {
     en: {
       eyebrow: 'A WORLD OF SHARED CURIOSITY', title: 'Hello, from around the world.',
-      intro: 'A shared view of the curiosity that brings us here.',
       allow: 'Add my visit to the globe', retry: 'Try loading again', withdraw: 'Turn off visitor globe',
       stats: 'Public report ↗', details: 'Data & privacy details', policy: 'MapMyVisitors privacy policy ↗', privacyTitle: 'Optional visitor globe',
       disclosure: 'Public counts are read without recording a visit. Loading the optional globe sends your IP address, approximate location, browser and page/referrer information to MapMyVisitors; data is retained while the owner’s account remains active. This choice is separate from Cloudflare analytics.',
@@ -29,7 +28,6 @@
     },
     zh: {
       eyebrow: '好奇心，让世界相遇', title: '来自世界各地的问候。',
-      intro: '让好奇心，连接世界各地的你我。',
       allow: '在地球上留下本次访问', retry: '重新尝试加载', withdraw: '关闭访客地球',
       stats: '公开报告 ↗', details: '数据与隐私说明', policy: 'MapMyVisitors 隐私政策 ↗', privacyTitle: '可选访客地球',
       disclosure: '公开数字只读更新，不会计入一次访问。加载可选地球会向 MapMyVisitors 发送 IP 地址、近似位置、浏览器及页面／来源信息；其政策说明，数据会在站主账号活跃期间保留。此选项与 Cloudflare 统计分别保存。',
@@ -202,7 +200,7 @@
   function render() {
     if (!initialized) return;
     const text = words[lang];
-    for (const name of ['eyebrow', 'title', 'intro', 'disclosure', 'retention', 'metric', 'details', 'policy', 'stats', 'privacyTitle']) elements[name].textContent = text[name];
+    for (const name of ['eyebrow', 'title', 'disclosure', 'retention', 'metric', 'details', 'policy', 'stats', 'privacyTitle']) elements[name].textContent = text[name];
     elements.allow.textContent = ['error', 'waiting'].includes(state) ? text.retry : text.allow;
     elements.allow.disabled = !config || blocked() || Boolean(frame && !['error', 'waiting'].includes(state));
     elements.withdraw.textContent = text.withdraw;
@@ -224,45 +222,6 @@
     if (frame) frame.remove();
     frame = null;
   }
-  function escapeAttribute(value) { return value.replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character])); }
-  function frameDocument(scriptURL, messageNonce) {
-    // The unmodified legacy provider script binds window.load. A fresh frame gives
-    // it that event even when consent is granted after the main page has loaded.
-    const adapter = `(() => {
-      const nonce = ${JSON.stringify(messageNonce)};
-      const send = (kind, extra = {}) => parent.postMessage({type:'arthur-visitor-map',nonce,kind,...extra}, '*');
-      window.__visitorMapLoaded = () => send('script');
-      window.__visitorMapError = () => send('error');
-      let scheduled = false, lastHeight = 0, wasReady = false, lastLink = '';
-      const report = () => {
-        scheduled = false;
-        const body = document.body;
-        if (!body) return;
-        const height = Math.ceil(Math.max(body.scrollHeight, body.getBoundingClientRect().height) + 16);
-        if (height > 100 && height !== lastHeight) { lastHeight = height; send('height', {height}); }
-        const globe = document.querySelector('.mmvst_inner');
-        if (!wasReady && globe && getComputedStyle(globe).display !== 'none') { wasReady = true; send('ready'); }
-        const link = document.querySelector('#mmvst_a');
-        if (link && link.href !== lastLink) { lastLink = link.href; send('stats', {url:link.href}); }
-      };
-      const schedule = () => { if (!scheduled) { scheduled = true; setTimeout(report, 100); } };
-      window.addEventListener('load', () => { report(); setTimeout(report,1000); });
-      document.addEventListener('DOMContentLoaded', () => {
-        // Ignore the animation's frame-by-frame transforms. Only visibility of
-        // the globe itself, links and actual content/layout can change our UI.
-        new MutationObserver(changes => {
-          if (changes.some(change => change.type !== 'attributes' || change.attributeName !== 'style' || change.target.matches('.mmvst_inner'))) schedule();
-        }).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['href','style']});
-        if ('ResizeObserver' in window) new ResizeObserver(schedule).observe(document.body);
-        document.addEventListener('click', event => {
-          const link = event.target.closest && event.target.closest('a');
-          if (link) { event.preventDefault(); send('link', {url:link.href}); }
-        });
-        report();
-      });
-    })();`;
-    return `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>html,body{margin:0;padding:0;background:transparent;font:13px/1.5 system-ui,sans-serif;color:#142d37}body{padding-bottom:8px}#providerHost{width:100%;max-width:360px;margin:0 auto}a{color:#176a69}img,svg{max-width:100%}.dots_svg{max-width:none}@media(prefers-reduced-motion:reduce){.mmvst_map_f,.mmvst_map_b,.mmvst_dots{transform:none!important}.mmvst_globe{transform:none!important}}</style><script>${adapter}<\/script></head><body><div id="providerHost"><script type="text/javascript" id="mmvst_globe" src="${escapeAttribute(scriptURL)}" onload="window.__visitorMapLoaded()" onerror="window.__visitorMapError()"><\/script></div></body></html>`;
-  }
   function load() {
     if (!initialized || !consent || !config || !privacyControls || blocked()) { render(); return; }
     if (frame && !['error', 'waiting'].includes(state)) return;
@@ -273,7 +232,9 @@
     frame.setAttribute('sandbox', 'allow-scripts');
     frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
     frame.style.height = '440px';
-    frame.srcdoc = frameDocument(config, nonce);
+    const widget = new URL("visitor-widget.html?v=20261112b", document.baseURI);
+    widget.hash = nonce;
+    frame.src = widget.href;
     state = 'loading';
     elements.host.append(frame);
     render();
@@ -302,7 +263,6 @@
     elements = {};
     elements.eyebrow = make('p', 'vm-eyebrow', content);
     elements.title = make('h2', 'vm-title', content);
-    elements.intro = make('p', 'vm-intro', content);
     elements.metrics = make('div', 'vm-metrics', content);
     for (const name of ['total', 'country']) {
       const metric = make('div', 'vm-metric', elements.metrics);
