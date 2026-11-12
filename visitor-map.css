@@ -1,22 +1,42 @@
 #visitorMap:not([data-visitor-map-ready="true"]), #visitorMap[hidden], #visitorMap [hidden] { display: none !important; }
-#visitorMap { width: 100%; flex-basis: 100%; margin: 0 0 28px; color: var(--ink, #142d37); }
+#visitorMap { margin: 0 auto; color: var(--ink, #142d37); }
 .vm-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 360px); gap: 30px; align-items: center; padding: 28px; border: 1px solid var(--line, #d8dfdb); border-radius: 12px; background: var(--soft, #e9eeea); }
 .vm-eyebrow { margin: 0 0 12px; color: var(--accent, #176a69); font-size: 9px; letter-spacing: .18em; line-height: 1.5; }
 .vm-title { margin: 0 0 14px; font-size: clamp(23px, 2.4vw, 30px); line-height: 1.2; }
 .vm-intro { margin: 0 0 14px; color: var(--ink, #142d37); font-size: 13px; line-height: 1.65; }
 .vm-disclosure { margin: 0; color: var(--muted, #63757a); font-size: 11px; line-height: 1.65; }
+.vm-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 26px 0 12px; }
+.vm-metric { display: flex; flex-direction: column; min-width: 0; }
+.vm-metric-number { display: block; color: var(--ink, #142d37); font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(40px, 4.5vw, 60px); font-weight: 500; line-height: 1.1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.vm-metric-label { margin-top: 9px; font-size: 12px; line-height: 1.5; }
+.vm-metric-scope { margin-top: 5px; color: var(--muted, #63757a); font-size: 9px; line-height: 1.5; }
+.vm-stats-meta { margin: 15px 0 0; color: var(--muted, #63757a); font-size: 10px; line-height: 1.6; }
 .vm-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 12px; }
-#visitorMap .vm-button { min-height: 40px; padding: 9px 13px; border: 1px solid var(--accent, #176a69); border-radius: 5px; background: var(--accent, #176a69); color: #fff; font: inherit; font-size: 11px; line-height: 1.5; cursor: pointer; }
-#visitorMap .vm-button-secondary { background: transparent; color: var(--accent, #176a69); }
-#visitorMap .vm-button:disabled { opacity: .55; cursor: not-allowed; }
+.vm-privacy-group .vm-button { min-height: 40px; padding: 9px 13px; border: 1px solid var(--accent, #176a69); border-radius: 5px; background: var(--accent, #176a69); color: #fff; font: inherit; font-size: 11px; line-height: 1.5; cursor: pointer; }
+.vm-privacy-group .vm-button-secondary { background: transparent; color: var(--accent, #176a69); }
+.vm-privacy-group .vm-button:disabled { opacity: .55; cursor: not-allowed; }
+.vm-privacy-group { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--line, #d8dfdb); }
+.vm-privacy-group h3 { font-size: 19px; }
+.vm-privacy-group .vm-status { margin: 0 0 10px; font-size: 11px; }
+.vm-privacy-group .vm-details p { font-size: 11px; }
 .vm-status { margin: 0 0 10px; color: var(--muted, #63757a); font-size: 11px; line-height: 1.6; }
 .vm-link { display: inline-block; margin: 6px 0; color: var(--accent, #176a69); font-size: 11px; text-underline-offset: 3px; text-decoration: underline; }
 .vm-details { margin-top: 8px; color: var(--muted, #63757a); font-size: 10px; line-height: 1.65; }
 .vm-details summary { cursor: pointer; min-height: 30px; padding: 5px 0; }
 .vm-details p { margin: 9px 0; }
-.vm-host { width: 100%; min-width: 0; max-width: 360px; justify-self: center; }
+.vm-host { position: relative; width: 100%; min-width: 0; max-width: 360px; justify-self: center; }
 .vm-frame { display: block; width: 100%; border: 0; background: transparent; }
-.vm-card:not(:has(.vm-host:not([hidden]))) { grid-template-columns: minmax(0, 1fr); }
-#visitorMap a:focus-visible, #visitorMap button:focus-visible, #visitorMap summary:focus-visible { outline: 3px solid #bb8d51; outline-offset: 4px; }
+.vm-frame:not([data-ready="true"]) { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.vm-decorative-globe { position: relative; width: min(280px, 85%); aspect-ratio: 1; margin: 30px auto; overflow: hidden; border: 1px solid #4e8a843d; border-radius: 50%; background: radial-gradient(circle at 32% 24%, #f8fbf4 0, #cbded330 35%, #176a691a 75%, #163e4733 100%); box-shadow: inset -20px -12px 40px #163e4712, 0 18px 40px #163e470a; transform: rotate(-15deg); }
+.vm-orbit, .vm-equator { position: absolute; inset: -1px; border: 1px solid #4e8a8435; border-radius: 50%; }
+.vm-orbit { animation: vm-orbit 24s linear infinite; }
+.vm-orbit-two { animation-delay: -8s; }
+.vm-orbit-three { animation-delay: -16s; }
+.vm-equator { inset: 30% -1px; }
+.vm-decorative-globe::before, .vm-decorative-globe::after { content: ''; position: absolute; inset: 13% 7%; border: 1px solid #4e8a8428; border-radius: 50%; transform: scaleY(.3) translateY(-65%); }
+.vm-decorative-globe::after { transform: scaleY(.3) translateY(65%); }
+@keyframes vm-orbit { from { transform: rotateY(0deg); } to { transform: rotateY(180deg); } }
+#visitorMap a:focus-visible, .vm-privacy-group button:focus-visible, .vm-privacy-group summary:focus-visible { outline: 3px solid #bb8d51; outline-offset: 4px; }
 @media (max-width: 680px) { .vm-card { grid-template-columns: 1fr; gap: 20px; padding: 22px 18px; } .vm-title { font-size: 25px; } .vm-disclosure { font-size: 11px; } .vm-host { max-width: min(360px, 100%); } }
+@media (prefers-reduced-motion: reduce) { .vm-orbit { animation: none; } .vm-orbit-one { transform: scaleX(.38); } .vm-orbit-two { transform: scaleX(.72); } }
 @media print { #visitorMap { display: none !important; } }

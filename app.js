@@ -18,7 +18,7 @@
     $('#language').textContent=lang==='zh'?'EN':'中文';
     $('#language').setAttribute('aria-label',lang==='zh'?'Switch to English':'切换到中文');
     $('#honorList').innerHTML=PROFILE.honors.map(h=>`<article class="honor"><span class="honor-mark">✧</span><span class="year">${h.year}</span><h3>${h[lang][0]}</h3><p>${h[lang][1]}</p></article>`).join('');
-    $('#moreAwards').innerHTML=PROFILE.awards.map(a=>`<p>${esc(a[lang==='zh'?1:0])}</p>`).join('');
+    $('#moreAwards').innerHTML=PROFILE.awards.map(a=>`<p>${esc(a[lang==='zh'?1:0]).replace(/× (\d+)\b/g,(_,n)=>`× <span data-count="${n}">${n}</span>`)}</p>`).join('');
     $('#timeline').className='timeline';
     $('#timeline').innerHTML=PROFILE.timeline.map(t=>`<div><time>${lang==='zh'?t.date.replace('PRESENT','至今'):t.date}</time><h3>${t[lang][0]}</h3><p>${t[lang][1]}</p></div>`).join('');
     renderPapers(); updateCycle(); window.LifeGallery?.setLanguage(lang); window.ResearchDemo?.setLanguage(lang); window.SiteAnalytics?.setLanguage(lang); window.VisitorMap?.setLanguage(lang);

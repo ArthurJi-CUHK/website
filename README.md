@@ -7,7 +7,8 @@ GitHub Pages deploys the `main` branch, repository root.
 
 - `index.html`, `content.js`: bilingual professional profile and publications.
 - `styles.css`, `refinements.css`, `app.js`: visual design, language/theme controls, scroll voyage and piano.
-- `research.css`, `research.js`: cohort-scale graphics and an explicitly synthetic observation-quality demonstration.
+- `research.css`, `research.js`: cohort graphics and a synthetic DemScreen time-window explorer.
+- `numbers.js`: viewport-triggered metric counters with a reduced-motion mode.
 - `gallery.css`, `gallery.js`: keyboard-accessible, three-panel personal-photo curtains.
 - `analytics.js`, `config.js`: consent-gated Cloudflare Web Analytics. The site identifier is public, not an API key.
 
@@ -20,10 +21,15 @@ the footer privacy dialog. Do Not Track / Global Privacy Control suppress it. Ow
 statistics are private to the Cloudflare dashboard. A loaded beacon may still send a
 final event during withdrawal/reload.
 
-The separate optional MapMyVisitors globe displays the provider’s actual visitor
-map/counts after its own consent choice. It processes IP and approximate location.
-No fictional visits or independent counter are added. Its public embed ID was supplied
-by the website owner. The third-party widget is isolated from the main page.
+The visitor section reads public MapMyVisitors totals from a read-only Cloudflare
+Worker every 60 seconds while the page is visible. The country/region count is
+for the provider’s displayed report period. If the endpoint is unavailable, the
+page can show a dated, verified snapshot. The local interactive globe uses Natural
+Earth geography and lights only regions confirmed by the provider.
+
+Recording a visit with the separate MapMyVisitors widget is optional in the
+footer privacy dialog. The isolated widget processes IP and approximate location.
+Reading or refreshing the public figures does not reload the recording widget.
 
 Research prototypes are not medical diagnostic tools. Demo activity values are
 synthetic. No private DemScreen app, patient files, or manuscript is published.

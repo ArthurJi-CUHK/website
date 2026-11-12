@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "provider": "MapMyVisitors",
+  "reportUrl": "https://mapmyvisitors.com/web/1c9bw",
+  "totalPageviews": 0,
+  "countryCount": 0,
+  "countryCodes": [],
+  "countryPeriod": { "start": "2026-11-01", "end": "2026-11-30" },
+  "updatedAt": "2026-11-12T06:56:20.853Z",
+  "refreshAfterSeconds": 60
+}

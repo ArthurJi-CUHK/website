@@ -5,6 +5,8 @@
   if (!root) return;
   let language = 'en';
   let scenario = 'sufficient';
+  let selectedWindow = 10;
+  let windowButtons = [];
   const strings = {
     en: {
       womenKicker: '01 — WEARABLE INTELLIGENCE', womenScope: "Women's health research scope",
@@ -13,44 +15,54 @@
       hkLabel: 'HONG KONG · HOME SENSING', homes: 'older-adult homes', deploymentScope: 'Cumulative programme deployments',
       mapAlt: 'Geographic outline of Hong Kong; no household locations shown', mapCaption: 'Geographic illustration · no household locations shown.',
       scopeCaption: 'Programme-wide scale, not a paper’s analysis cohort.', demoEyebrow: 'DemScreen Demo',
-      demoTitle: 'Missing observations ≠ inactivity.', synthetic: 'Synthetic demo · not clinical',
-      demoIntro: 'The same day can tell a different story when the evidence changes. Explore how a research system can ask for more information before producing a report.',
-      scenarioGroup: 'Illustrative evidence scenarios', sufficient: 'Enough evidence', sparse: 'Sparse observations', context: 'Needs context',
+      demoTitle: 'Dementia Screening', synthetic: 'Synthetic data',
+      demoIntro: 'Choose an evidence scenario, then select a time window to inspect the daily routine.',
+      scenarioGroup: 'Evidence scenarios', sufficient: 'Broad coverage', sparse: 'Missing periods', context: 'Unclear activity',
       activityLegend: 'Illustrative activity', missingLegend: 'Not observed', contextLegend: 'Needs context', observedLabel: 'OBSERVED WINDOWS',
-      previewLabel: 'Fixed synthetic output · not generated from the grid', riskLabel: 'Dementia risk · demo', diagnosisLabel: 'Diagnosis · demo',
+      previewLabel: 'Example output', riskLabel: 'Dementia risk', diagnosisLabel: 'Diagnosis',
       riskCaption: 'Illustrative score, not a probability', diagnosisCaption: 'AD is a fixed display example',
       diagnosisDescription: 'Fixed illustrative diagnosis categories: AD is highlighted, not a clinical finding',
-      previewNote: '78/100 and AD are fixed examples—not a clinical diagnosis, calibrated probability or model inference. The buttons above change evidence coverage only.',
+      previewNote: 'Fixed example · not a probability or diagnosis.',
       demoDisclaimer: 'Fixed synthetic examples · no patient data · no clinical inference. Scores, categories and observation counts are illustrative, not research results.',
       activities: ['Rest / still', 'Daily tasks', 'Media use', 'Exercise', 'Social activity'], mask: 'Observed',
       windowWord: 'window', notObserved: 'Not observed', observed: 'Observed', contextCell: 'Observed activity; context needed',
-      gridDescription: 'Synthetic daily activity grid: 5 activity categories, 26 half-hour windows, 07:00–20:00. {count} windows observed. Blank activity cells are not evidence of inactivity; check the observation row.',
+      inspectLabel: 'SELECTED WINDOW', inspectHint: 'Select a time window. Use ← → to move through the day.', previousWindow: 'Inspect previous half-hour window', nextWindow: 'Inspect next half-hour window',
+      missingActivity: 'No observation available', uncertainActivity: 'Social activity · context missing', windowSelect: 'Inspect',
+      missingDetail: 'No recording covers this period. Activity cannot be inferred from an empty window.',
+      contextDetail: 'Conversation is logged, but who initiated it and whether assistance was needed are unspecified.',
+      activityDetails: ['A quiet period appears in the example routine.', 'A household task is logged in this interval.', 'TV or media use appears in this interval.', 'A movement or exercise activity is logged.', 'A social interaction is logged in this interval.'],
+      gridDescription: 'Interactive daily routine: 5 activities, 26 half-hour windows, 07:00–20:00. {count} windows observed. Select a window to inspect its evidence; arrow keys move through the day.',
       statuses: {
-        sufficient: ['Illustrative report ready', 'Most windows are observed. In this fixed scenario, the evidence check allows an illustrative report.', 'Evidence sufficient in this example'],
-        sparse: ['More observations needed', 'Many periods are unobserved. The illustrative report is held; missing recordings cannot establish inactivity.', 'Report held · observation request'],
-        context: ['More context needed', 'Coverage alone is not enough. Two observed periods need context about what was happening before an illustrative report can proceed.', 'Report held · context request']
+        sufficient: ['Ready for evidence review', 'The day includes five activity categories across morning, afternoon and evening.', 'Next step · review supporting periods'],
+        sparse: ['Request more observations', 'Several periods are missing. Select a striped window to see what the record cannot tell us.', 'Next step · fill the observation gaps'],
+        context: ['Clarify activity context', 'Two midday periods contain social activity but lack context. Select an amber window to inspect it.', 'Next step · clarify task and assistance']
       }
     },
     zh: {
       womenKicker: '01 — 可穿戴智能', womenScope: '女性健康研究规模', womenCount: '名女性', womenCaption: '研究参与者', provinceCount: '个省份', provinceCaption: '广东 · 陕西',
       cycleVisual: '从日常信号，看见身体节律', ageingKicker: '02 — 智能居家感知', hkLabel: '香港 · 居家感知', homes: '户长者家庭',
       deploymentScope: '整体项目累计部署', mapAlt: '香港地理轮廓，不显示任何家庭位置', mapCaption: '地域示意 · 不展示家庭位置。',
-      scopeCaption: '整体项目规模，非单篇论文分析队列。', demoEyebrow: 'DemScreen Demo', demoTitle: '没有观测，不等于没有活动。',
-      synthetic: '合成演示 · 非临床用途', demoIntro: '同一天，证据不同，能得出的结论也不同。看看研究系统如何先请求更多信息，再生成报告。',
-      scenarioGroup: '示意性证据场景', sufficient: '证据充分', sparse: '观测稀疏', context: '需要更多背景',
+      scopeCaption: '整体项目规模，非单篇论文分析队列。', demoEyebrow: 'DemScreen Demo', demoTitle: '认知障碍筛查',
+      synthetic: '合成数据', demoIntro: '选择一种证据场景，再点选具体时间窗，查看日常活动记录。',
+      scenarioGroup: '证据场景', sufficient: '覆盖较完整', sparse: '部分时段缺失', context: '活动背景不明',
       activityLegend: '示意活动', missingLegend: '未被观测', contextLegend: '需补充背景', observedLabel: '已观测时间窗',
-      previewLabel: '固定合成输出 · 并非从上方活动图生成', riskLabel: '认知症风险 · 演示', diagnosisLabel: '诊断分类 · 演示',
+      previewLabel: '输出示例', riskLabel: '认知症风险', diagnosisLabel: '诊断分类',
       riskCaption: '示意分数，不代表患病概率', diagnosisCaption: 'AD 仅为固定展示示例',
       diagnosisDescription: '固定示意分类：AD 高亮仅用于展示，并非临床结论',
-      previewNote: '78/100 与 AD 均为固定示例，并非临床诊断、校准概率或模型推断结果。上方按钮只切换证据覆盖场景。',
+      previewNote: '固定示例 · 非患病概率或诊断。',
       demoDisclaimer: '固定合成示例 · 不含患者数据 · 不进行临床推断。分数、分类与观测数量均用于示意，并非研究结果。',
       activities: ['静息', '日常事务', '媒体使用', '运动', '社交活动'], mask: '观测覆盖', windowWord: '时间窗',
       notObserved: '未被观测', observed: '已观测', contextCell: '已观测到活动，需补充背景',
-      gridDescription: '合成日内活动示意：5 类活动、26 个半小时时间窗，覆盖 07:00 至 20:00。其中 {count} 个时间窗有观测。活动栏空白不代表没有活动，请同时查看观测覆盖行。',
+      inspectLabel: '当前时间窗', inspectHint: '点选时间窗，或用 ← → 沿时间轴查看。', previousWindow: '查看上一个半小时时间窗', nextWindow: '查看下一个半小时时间窗',
+      missingActivity: '暂无观测记录', uncertainActivity: '社交活动 · 背景缺失', windowSelect: '查看',
+      missingDetail: '这一时段没有记录，不能从空白时间窗推断是否发生了活动。',
+      contextDetail: '记录显示发生了交谈，但未说明由谁发起，以及是否需要他人协助。',
+      activityDetails: ['示例日程中，这是一段安静时段。', '这一时段记录了一项日常家务。', '这一时段出现了电视或其他媒体使用活动。', '这一时段记录了运动活动。', '这一时段记录了一次社交互动。'],
+      gridDescription: '可交互日常活动记录：5 类活动、26 个半小时时间窗，覆盖 07:00 至 20:00。其中 {count} 个时间窗有观测。选择时间窗查看证据，也可用方向键沿时间轴浏览。',
       statuses: {
-        sufficient: ['示意报告可生成', '大部分时间窗已有观测。在这个固定场景中，证据检查允许生成示意报告。', '仅本示例中的证据充分'],
-        sparse: ['需要更多观测', '多个时段没有被观测到。示意报告暂缓生成；记录缺失不能说明没有活动。', '报告暂缓 · 请求更多观测'],
-        context: ['需要更多背景', '有观测并不代表信息完整。两个已观测时段需要补充活动背景，才能继续生成示意报告。', '报告暂缓 · 请求活动背景']
+        sufficient: ['可进入证据复核', '记录覆盖上午、下午和傍晚，包含五类日常活动。', '下一步 · 复核支持时段'],
+        sparse: ['请求补充观测', '多个时段缺少记录。点选斜纹时间窗，查看当前证据的空缺。', '下一步 · 补充缺失时段'],
+        context: ['澄清活动背景', '中午的两个时段记录到社交活动，但背景不明。点选琥珀色时间窗查看。', '下一步 · 明确活动与协助情况']
       }
     }
   };
@@ -70,14 +82,74 @@
     return node;
   };
   const clock = index => `${String(7 + Math.floor(index / 2)).padStart(2, '0')}:${index % 2 ? '30' : '00'}`;
+  const inspectionHint = make('p', 'rx-inspection-hint');
+  inspectionHint.dataset.rx = 'inspectHint';
+  const inspector = make('div', 'rx-window-inspector');
+  inspector.setAttribute('aria-live', 'polite');
+  const inspectorHead = make('div', 'rx-inspector-head');
+  const inspectorCaption = make('div', 'rx-inspector-caption');
+  const inspectorLabel = make('span', 'rx-inspector-label');
+  inspectorLabel.dataset.rx = 'inspectLabel';
+  const inspectorTime = make('strong', 'rx-inspector-time');
+  inspectorCaption.append(inspectorLabel, inspectorTime);
+  const inspectorControls = make('div', 'rx-window-controls');
+  const previousButton = make('button', '', '←');
+  const nextButton = make('button', '', '→');
+  previousButton.type = nextButton.type = 'button';
+  previousButton.dataset.rxAria = 'previousWindow';
+  nextButton.dataset.rxAria = 'nextWindow';
+  inspectorControls.append(previousButton, nextButton);
+  inspectorHead.append(inspectorCaption, inspectorControls);
+  const inspectorActivity = make('strong', 'rx-inspector-activity');
+  const inspectorState = make('span', 'rx-inspector-state');
+  const inspectorNote = make('p', 'rx-inspector-note');
+  const inspectorDetail = make('div', 'rx-inspector-detail');
+  inspectorDetail.append(inspectorActivity, inspectorState, inspectorNote);
+  inspector.append(inspectorHead, inspectorDetail);
+  root.querySelector('.rx-pattern').append(inspectionHint, inspector);
+
+  function windowEvidence(index) {
+    const text = strings[language];
+    const observed = available[scenario][index];
+    const uncertain = observed && scenario === 'context' && [10,11].includes(index);
+    return {
+      state: !observed ? 'missing' : uncertain ? 'context' : 'observed',
+      label: !observed ? text.missingActivity : uncertain ? text.uncertainActivity : text.activities[activities[index]],
+      note: !observed ? text.missingDetail : uncertain ? text.contextDetail : text.activityDetails[activities[index]],
+      status: !observed ? text.notObserved : uncertain ? text.contextLegend : text.observed
+    };
+  }
+  function selectWindow(index, focus = false) {
+    selectedWindow = Math.max(0, Math.min(25, index));
+    const evidence = windowEvidence(selectedWindow);
+    inspectorTime.textContent = `${clock(selectedWindow)}–${clock(selectedWindow + 1)}`;
+    inspectorActivity.textContent = evidence.label;
+    inspectorState.textContent = evidence.status;
+    inspectorNote.textContent = evidence.note;
+    inspector.dataset.state = evidence.state;
+    previousButton.disabled = selectedWindow === 0;
+    nextButton.disabled = selectedWindow === 25;
+    windowButtons.forEach((button, index) => {
+      const selected = selectedWindow === index;
+      button.classList.toggle('is-selected', selected);
+      button.setAttribute('aria-pressed', String(selected));
+      button.tabIndex = selected ? 0 : -1;
+    });
+    if (focus) windowButtons[selectedWindow]?.focus();
+  }
+  previousButton.addEventListener('click', () => selectWindow(selectedWindow - 1));
+  nextButton.addEventListener('click', () => selectWindow(selectedWindow + 1));
+
   function renderScenario() {
     const text = strings[language];
     const mask = available[scenario];
     const count = mask.filter(Boolean).length;
     const fragment = document.createDocumentFragment();
+    const activityRows = make('div', 'rx-activity-rows');
     text.activities.forEach((label, rowIndex) => {
       const row = make('div', 'rx-grid-row');
       row.dataset.activity = String(rowIndex);
+      row.setAttribute('aria-hidden', 'true');
       row.append(make('span', 'rx-row-label', label));
       activities.forEach((activity, index) => {
         const isActive = mask[index] && activity === rowIndex;
@@ -88,19 +160,48 @@
         cell.title = `${clock(index)}–${clock(index + 1)} · ${!mask[index] ? text.notObserved : needsContext ? text.contextCell : isActive ? label : text.observed}`;
         row.append(cell);
       });
-      fragment.append(row);
+      activityRows.append(row);
     });
+    const windowTargets = make('div', 'rx-window-targets');
+    windowButtons = activities.map((_, index) => {
+      const evidence = windowEvidence(index);
+      const button = make('button', `rx-window-target is-${evidence.state}`);
+      button.type = 'button';
+      button.dataset.window = String(index);
+      button.setAttribute('aria-label', `${text.windowSelect} ${clock(index)}–${clock(index + 1)} · ${evidence.label} · ${evidence.status}`);
+      button.title = `${clock(index)}–${clock(index + 1)} · ${evidence.label}`;
+      button.addEventListener('click', () => selectWindow(index));
+      button.addEventListener('keydown', event => {
+        const offsets = {ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1};
+        let next = index;
+        if (event.key in offsets) next = index + offsets[event.key];
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = 25;
+        else return;
+        event.preventDefault();
+        selectWindow(next, true);
+      });
+      windowTargets.append(button);
+      return button;
+    });
+    activityRows.append(windowTargets);
+    fragment.append(activityRows);
     const maskRow = make('div', 'rx-grid-row rx-mask-row');
+    maskRow.setAttribute('aria-hidden', 'true');
     maskRow.append(make('span', 'rx-row-label', text.mask));
     mask.forEach(observed => maskRow.append(make('span', `rx-cell${observed ? '' : ' is-missing'}`)));
     fragment.append(maskRow);
     const axis = make('div', 'rx-axis');
+    axis.setAttribute('aria-hidden', 'true');
     ['07:00','10:00','13:00','16:00','20:00'].forEach(time => axis.append(make('span', '', time)));
     fragment.append(axis);
     grid.replaceChildren(fragment);
+    grid.setAttribute('role', 'group');
     grid.setAttribute('aria-label', text.gridDescription.replace('{count}', count));
     container.dataset.scenario = scenario;
-    root.querySelector('#observedCount').textContent = count;
+    const countElement = root.querySelector('#observedCount');
+    if (window.SiteNumbers?.set) window.SiteNumbers.set(countElement, count);
+    else countElement.textContent = count;
     const [heading, explanation, action] = text.statuses[scenario];
     root.querySelector('#evidenceStatus').textContent = heading;
     root.querySelector('#evidenceExplanation').textContent = explanation;
@@ -111,6 +212,7 @@
       button.classList.toggle('is-active', selected);
       button.setAttribute('aria-pressed', String(selected));
     });
+    selectWindow(selectedWindow);
   }
   function setLanguage(value) {
     language = String(value).toLowerCase().startsWith('zh') ? 'zh' : 'en';
@@ -125,6 +227,7 @@
   }
   root.querySelectorAll('button[data-scenario]').forEach(button => button.addEventListener('click', () => {
     scenario = button.dataset.scenario;
+    selectedWindow = scenario === 'sparse' ? 2 : 10;
     renderScenario();
   }));
   window.ResearchDemo = Object.freeze({setLanguage});
