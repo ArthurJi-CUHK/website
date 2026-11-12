@@ -39,6 +39,10 @@
   const progress=()=>{scrollFrame=0;const ratio=Math.max(0,Math.min(1,window.scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)));$('#voyageFill').style.transform='scaleX('+ratio+')';$('#voyageBoat').style.transform='translate3d('+ (4+ratio*Math.max(0,innerWidth-36)) +'px,0,0)';};
   const queueProgress=()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(progress);};
   window.addEventListener('scroll',queueProgress,{passive:true});window.addEventListener('resize',queueProgress);progress();
+  const careScene=$('.care-scene');
+  if(careScene&&'IntersectionObserver' in window){
+    new IntersectionObserver(([entry])=>careScene.classList.toggle('is-in-view',entry.isIntersecting&&entry.intersectionRatio>=.2),{threshold:[0,.2]}).observe(careScene);
+  }
   // A quiet, locally rendered night sky. Respect reduced motion and background tabs.
   const canvas=$('#sky'),ctx=canvas.getContext('2d');let width=0,height=0,stars=[],raf=0;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');let heroVisible=true;
