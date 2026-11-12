@@ -10,26 +10,21 @@ GitHub Pages deploys the `main` branch, repository root.
 - `research.css`, `research.js`: cohort graphics and a synthetic DemScreen time-window explorer.
 - `numbers.js`: viewport-triggered metric counters with a reduced-motion mode.
 - `gallery.css`, `gallery.js`: keyboard-accessible, three-panel personal-photo curtains.
-- `analytics.js`, `config.js`: consent-gated Cloudflare Web Analytics. The site identifier is public, not an API key.
+- `visitor-counter.js`, `visitor-globe.js`, `config.js`: aggregate page-view totals and a local interactive globe.
 
 There is no background music or automatic audio, and no third-party font request.
 Personal photos are resized and contain no EXIF/GPS metadata. The piano generates
 individual notes locally only after interaction. Reduced-motion preferences are respected.
 
-Cloudflare Web Analytics is optional and starts only after a visitor opts in through
-the footer privacy dialog. Do Not Track / Global Privacy Control suppress it. Owner
-statistics are private to the Cloudflare dashboard. A loaded beacon may still send a
-final event during withdrawal/reload.
+The visitor section reads aggregate page-view totals from the homepage's Cloudflare
+Worker every 60 seconds while the page is visible. It does not reload the globe or
+increase the counter when it refreshes. The local globe uses Natural Earth geography
+and lights only recorded countries or regions.
 
-The visitor section reads public MapMyVisitors totals from a read-only Cloudflare
-Worker every 60 seconds while the page is visible. The country/region count is
-for the provider’s displayed report period. If the endpoint is unavailable, the
-page can show a dated, verified snapshot. The local interactive globe uses Natural
-Earth geography and lights only regions confirmed by the provider.
-
-Recording a visit with the separate MapMyVisitors widget is optional in the
-footer privacy dialog. The isolated widget processes IP and approximate location.
-Reading or refreshing the public figures does not reload the recording widget.
+The Worker counts one view per loaded page using a short-lived random request key
+to deduplicate retries, and Cloudflare's country/region signal. The counter does
+not read or retain raw IPs or set visitor identification cookies. DNT, GPC and the
+footer opt-out stop new recording; public statistics remain visible.
 
 Research prototypes are not medical diagnostic tools. Demo activity values are
 synthetic. No private DemScreen app, patient files, or manuscript is published.

@@ -8,6 +8,7 @@
 .vm-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 26px 0 12px; }
 .vm-metric { display: flex; flex-direction: column; min-width: 0; }
 .vm-metric-number { display: block; color: var(--ink, #142d37); font-family: 'Manrope', system-ui, sans-serif; font-size: clamp(40px, 4.5vw, 60px); font-weight: 500; line-height: 1.1; letter-spacing: -.06em; font-variant-numeric: tabular-nums; }
+.vm-metric-number.count-up { display:inline-grid; align-self:start; }
 .vm-metric-label { margin-top: 9px; font-size: 12px; line-height: 1.5; }
 .vm-metric-scope { margin-top: 5px; color: var(--muted, #63757a); font-size: 9px; line-height: 1.5; }
 .vm-stats-meta { margin: 15px 0 0; color: var(--muted, #63757a); font-size: 10px; line-height: 1.6; }
