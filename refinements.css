@@ -37,6 +37,13 @@ html[data-theme="day"] #progress{color:#246c67}
 .challenge-scale{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:15px;padding-top:15px;border-top:1px solid var(--line)}
 .challenge-scale>div{min-width:0}.challenge-scale b{display:block;color:var(--accent);font:clamp(24px,3vw,35px)/1.2 var(--serif)}
 .challenge-scale small{display:block;color:var(--muted);font-size:10px;line-height:1.5;margin-top:4px}
+/* Keep entry names ahead of their dates across honours and experience. */
+.honor h3{margin:0 22px 6px 0}.honor .year{display:block;margin-bottom:10px;font-variant-numeric:tabular-nums}
+#moreAwards .award-title{display:block;color:var(--ink)}
+#moreAwards .entry-date{display:block;margin-top:4px;color:var(--accent);font-size:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.timeline h3{margin:0 0 4px}.timeline time{display:block;margin-bottom:5px;font-variant-numeric:tabular-nums}
+.teaching p{grid-template-columns:minmax(0,1fr);gap:3px}
+.teaching time{grid-row:auto;font-variant-numeric:tabular-nums}
 @media print{.count-visual,.count-up::after{display:none}.count-spoken{position:static;width:auto;height:auto;margin:0;overflow:visible;clip-path:none}}
 @media(max-width:680px){#lifeGallery{margin-top:35px}.hero h1{font-size:61px}.cn-name{font-size:23px}.orbit-label{right:-24px}footer #privacy{padding:0}}
 @media print{#progress,#lifeGallery,.research-demo,.cohort-stats,.hk-visual{display:none!important}}

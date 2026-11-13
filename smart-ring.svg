@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 340" role="img" aria-labelledby="ring-title ring-description">
+  <title id="ring-title">Smart finger ring</title>
+  <desc id="ring-description">A polished silver smart ring with an open centre and small sensing elements along its inner surface. An illustrative device, not a depiction of a specific product model.</desc>
+  <defs>
+    <linearGradient id="ring-metal" x1=".05" y1=".2" x2=".96" y2=".8">
+      <stop stop-color="#637875"/><stop offset=".16" stop-color="#e8eeea"/><stop offset=".3" stop-color="#a8b9b2"/><stop offset=".46" stop-color="#f9fcf7"/><stop offset=".58" stop-color="#bccac2"/><stop offset=".77" stop-color="#708681"/><stop offset=".91" stop-color="#e1e9e1"/><stop offset="1" stop-color="#8aa098"/>
+    </linearGradient>
+    <linearGradient id="ring-front" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#dce7dc"/><stop offset=".46" stop-color="#b3c4b9"/><stop offset=".84" stop-color="#6c867d"/><stop offset="1" stop-color="#375b52"/>
+    </linearGradient>
+    <linearGradient id="ring-inner" x1="0" y1="0" x2="1" y2=".45">
+      <stop stop-color="#48645e"/><stop offset=".45" stop-color="#183d37"/><stop offset="1" stop-color="#63847a"/>
+    </linearGradient>
+    <radialGradient id="ring-shadow"><stop stop-color="#214e42" stop-opacity=".18"/><stop offset="1" stop-color="#214e42" stop-opacity="0"/></radialGradient>
+    <radialGradient id="ring-sensor"><stop stop-color="#d6fa9f"/><stop offset=".45" stop-color="#a5c97a"/><stop offset="1" stop-color="#536f50"/></radialGradient>
+  </defs>
+  <ellipse cx="224" cy="288" rx="136" ry="24" fill="url(#ring-shadow)"/>
+  <g transform="rotate(-22 220 163)">
+    <!-- The open centre remains transparent; this is a finger band, not a display. -->
+    <path d="M93 163a127 99 0 1 0 254 0a127 99 0 1 0-254 0Z M126 149a94 65 0 1 1 188 0a94 65 0 1 1-188 0Z" fill="url(#ring-metal)" fill-rule="evenodd"/>
+    <path d="M126 149c0-36 42-65 94-65s94 29 94 65l-8 21c-6-33-42-57-86-57s-80 24-86 57Z" fill="url(#ring-inner)"/>
+    <path d="M93 163c0 55 57 99 127 99s127-44 127-99c-6 47-60 80-127 80S99 210 93 163Z" fill="url(#ring-front)"/>
+    <path d="M97 144c10-47 61-78 123-78 64 0 117 35 125 82" fill="none" stroke="#f7fcf5" stroke-opacity=".78" stroke-width="2.2"/>
+    <path d="M103 195c18 33 62 55 117 55 49 0 94-19 115-48" fill="none" stroke="#eaf3e7" stroke-opacity=".54" stroke-width="1.6"/>
+    <path d="M129 148c0-35 41-62 91-62s91 27 91 62" fill="none" stroke="#cfdfd3" stroke-opacity=".75" stroke-width="1.5"/>
+    <path d="M142 182c15 21 44 34 78 34 35 0 65-14 79-36" fill="none" stroke="#eef6ea" stroke-opacity=".82" stroke-width="1.2"/>
+    <g transform="rotate(-5 220 102)">
+      <rect x="194" y="92" width="52" height="17" rx="8.5" fill="#0b2925" stroke="#76968a" stroke-width="1"/>
+      <circle cx="207" cy="100.5" r="4" fill="url(#ring-sensor)"/>
+      <circle cx="220" cy="100.5" r="3" fill="#507965" stroke="#a6c1a3" stroke-width=".7"/>
+      <circle cx="233" cy="100.5" r="4" fill="url(#ring-sensor)"/>
+    </g>
+    <circle cx="170" cy="117" r="3" fill="#a6b8a9" stroke="#415f54" stroke-width="1"/>
+    <circle cx="271" cy="117" r="3" fill="#a6b8a9" stroke="#415f54" stroke-width="1"/>
+    <path d="M113 178c11 29 29 45 48 55" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="6" stroke-linecap="round"/>
+  </g>
+</svg>

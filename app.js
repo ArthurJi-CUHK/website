@@ -17,10 +17,10 @@
     all('[data-t]').forEach(el=>el.innerHTML=(lang==='zh'?ZH:en)[el.dataset.t]||en[el.dataset.t]);
     $('#language').textContent=lang==='zh'?'EN':'中文';
     $('#language').setAttribute('aria-label',lang==='zh'?'Switch to English':'切换到中文');
-    $('#honorList').innerHTML=PROFILE.honors.map(h=>`<article class="honor"><span class="honor-mark">✧</span><span class="year">${h.year}</span><h3>${h[lang][0]}</h3><p>${h[lang][1]}</p></article>`).join('');
-    $('#moreAwards').innerHTML=PROFILE.awards.map(a=>`<p>${esc(a[lang==='zh'?1:0]).replace(/× (\d+)\b/g,(_,n)=>`× <span data-count="${n}">${n}</span>`)}</p>`).join('');
+    $('#honorList').innerHTML=PROFILE.honors.map(h=>`<article class="honor"><span class="honor-mark" aria-hidden="true">✧</span><h3>${h[lang][0]}</h3><span class="year">${h.year}</span><p>${h[lang][1]}</p></article>`).join('');
+    $('#moreAwards').innerHTML=PROFILE.awards.map(a=>`<p><span class="award-title">${esc(a[lang]).replace(/× (\d+)\b/g,(_,n)=>`× <span data-count="${n}">${n}</span>`)}</span>${a.year?`<time class="entry-date" datetime="${a.year}">${a.year}</time>`:''}</p>`).join('');
     $('#timeline').className='timeline';
-    $('#timeline').innerHTML=PROFILE.timeline.map(t=>`<div><time>${lang==='zh'?t.date.replace('PRESENT','至今'):t.date}</time><h3>${t[lang][0]}</h3><p>${t[lang][1]}</p></div>`).join('');
+    $('#timeline').innerHTML=PROFILE.timeline.map(t=>`<div><h3>${t[lang][0]}</h3><time>${lang==='zh'?t.date.replace('Present','至今'):t.date}</time><p>${t[lang][1]}</p></div>`).join('');
     renderPapers(); updateCycle(); window.LifeGallery?.setLanguage(lang); window.ResearchDemo?.setLanguage(lang); window.SiteAnalytics?.setLanguage(lang); window.VisitorMap?.setLanguage(lang);
   }
   $('#language').addEventListener('click',()=>{lang=lang==='en'?'zh':'en';storage.set('arthur-language',lang);render();});

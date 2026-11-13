@@ -9,9 +9,9 @@
   let windowButtons = [];
   const strings = {
     en: {
-      womenKicker: '01 — WEARABLE INTELLIGENCE', womenScope: "Women's health research scope",
+      womenKicker: '01 — SMART-RING INTELLIGENCE', womenScope: "Women's health research scope",
       womenCount: 'women', womenCaption: 'Research participants', provinceCount: 'provinces', provinceCaption: 'Guangdong · Shaanxi',
-      cycleVisual: 'A WINDOW INTO EVERYDAY RHYTHMS', ageingKicker: '02 — INTELLIGENT HOME SENSING',
+      cycleVisual: 'SMART-RING HEALTH SENSING', ringAlt: 'Polished smart finger ring with an open centre and inner sensors', ageingKicker: '02 — INTELLIGENT HOME SENSING',
       hkLabel: 'HONG KONG · HOME SENSING', homes: 'older-adult homes', deploymentScope: 'Cumulative programme deployments',
       mapAlt: 'Geographic outline of Hong Kong; no household locations shown', mapCaption: 'Geographic illustration · no household locations shown.',
       scopeCaption: 'Programme-wide scale, not a paper’s analysis cohort.', demoEyebrow: 'DemScreen Demo',
@@ -39,8 +39,8 @@
       }
     },
     zh: {
-      womenKicker: '01 — 可穿戴智能', womenScope: '女性健康研究规模', womenCount: '名女性', womenCaption: '研究参与者', provinceCount: '个省份', provinceCaption: '广东 · 陕西',
-      cycleVisual: '从日常信号，看见身体节律', ageingKicker: '02 — 智能居家感知', hkLabel: '香港 · 居家感知', homes: '户长者家庭',
+      womenKicker: '01 — 智能指环', womenScope: '女性健康研究规模', womenCount: '名女性', womenCaption: '研究参与者', provinceCount: '个省份', provinceCaption: '广东 · 陕西',
+      cycleVisual: '智能指环 · 健康感知', ringAlt: '抛光金属智能指环，中央镂空，内侧设有感知元件', ageingKicker: '02 — 智能居家感知', hkLabel: '香港 · 居家感知', homes: '户长者家庭',
       deploymentScope: '整体项目累计部署', mapAlt: '香港地理轮廓，不显示任何家庭位置', mapCaption: '地域示意 · 不展示家庭位置。',
       scopeCaption: '整体项目规模，非单篇论文分析队列。', demoEyebrow: 'DemScreen Demo', demoTitle: '认知障碍筛查',
       synthetic: '合成数据', demoIntro: '选择一种证据场景，再点选具体时间窗，查看日常活动记录。',
