@@ -25,9 +25,7 @@ window.PROFILE = {
     {year:'2023',en:'UX Design Award — National Third Prize',zh:'用户体验设计大赛 — 全国三等奖'},
     {year:'2023',en:'Challenge Cup “Black Technology” — Third Prize',zh:'挑战杯“黑科技”专项 — 三等奖'},
     {year:'2023',en:'NC State GEARS Virtual Poster Competition — Second Place',zh:'北卡罗来纳州立大学 GEARS 海报竞赛 — 第二名'},
-    {en:'BIT · First-Class Outstanding Student Scholarship × 6; Zhilan Scholarship',zh:'北京理工大学 · 优秀学生一等奖学金 × 6；芝兰奖学金'},
-    {en:'BIT · Model Outstanding Student × 2',zh:'北京理工大学 · 优秀学生标兵 × 2'},
-    {year:'2024',en:'BIT · Public speaking competition runner-up',zh:'北京理工大学 · 演讲比赛亚军'}
+    {times:6,years:['2022','2023','2024'],en:'BIT · First-Class Outstanding Student Scholarship',zh:'北京理工大学 · 优秀学生一等奖学金'}
   ],
   timeline:[
     {date:'2025-Present',en:['The Chinese University of Hong Kong','PhD · Information Engineering'],zh:['香港中文大学','信息工程博士研究生']},

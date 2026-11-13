@@ -18,7 +18,12 @@
     $('#language').textContent=lang==='zh'?'EN':'中文';
     $('#language').setAttribute('aria-label',lang==='zh'?'Switch to English':'切换到中文');
     $('#honorList').innerHTML=PROFILE.honors.map(h=>`<article class="honor"><span class="honor-mark" aria-hidden="true">✧</span><h3>${h[lang][0]}</h3><span class="year">${h.year}</span><p>${h[lang][1]}</p></article>`).join('');
-    $('#moreAwards').innerHTML=PROFILE.awards.map(a=>`<p><span class="award-title">${esc(a[lang]).replace(/× (\d+)\b/g,(_,n)=>`× <span data-count="${n}">${n}</span>`)}</span>${a.year?`<time class="entry-date" datetime="${a.year}">${a.year}</time>`:''}</p>`).join('');
+    $('#moreAwards').innerHTML=PROFILE.awards.map(a=>{
+      const title=esc(a[lang]).replace(/× (\d+)\b/g,(_,n)=>`× <span data-count="${n}">${n}</span>`);
+      const times=a.times?` <span data-count="${a.times}">${a.times}</span>${lang==='zh'?' 次':' times'}`:'';
+      const years=a.years?`${lang==='zh'?'，':', '}${a.years.map(year=>`<time datetime="${esc(year)}">${esc(year)}</time>`).join(lang==='zh'?'、':', ')}`:'';
+      return `<p><span class="award-title">${title}${times}${years}</span>${a.year?`<time class="entry-date" datetime="${a.year}">${a.year}</time>`:''}</p>`;
+    }).join('');
     $('#timeline').className='timeline';
     $('#timeline').innerHTML=PROFILE.timeline.map(t=>`<div><h3>${t[lang][0]}</h3><time>${lang==='zh'?t.date.replace('Present','至今'):t.date}</time><p>${t[lang][1]}</p></div>`).join('');
     renderPapers(); updateCycle(); window.LifeGallery?.setLanguage(lang); window.ResearchDemo?.setLanguage(lang); window.SiteAnalytics?.setLanguage(lang); window.VisitorMap?.setLanguage(lang);
@@ -29,7 +34,7 @@
   const setTheme = t => {document.documentElement.dataset.theme=t;$('#theme').textContent=t==='night'?'☼':'☾';$('#theme').setAttribute('aria-label',t==='night'?'Switch to daylight theme':'Switch to deep sea theme');};
   setTheme(storage.get('arthur-theme')==='day'?'day':'night');
   $('#theme').addEventListener('click',()=>{const t=document.documentElement.dataset.theme==='night'?'day':'night';setTheme(t);storage.set('arthur-theme',t);});
-  const updateCycle=()=>{const day=Number($('#cycleRange').value);$('#dayValue').textContent=day;$('.cycle-arc').style.strokeDashoffset=565*(1-day/28);const weekdays=lang==='zh'?['星期一','星期二','星期三','星期四','星期五','星期六','星期日']:['MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY'];const weekday=weekdays[(day-1)%7];if($('#weekdayValue'))$('#weekdayValue').textContent=weekday;$('#cycleRange').setAttribute('aria-valuetext',(lang==='zh'?'周期第 '+day+' 天，':'Cycle day '+day+', ')+weekday);};
+  const updateCycle=()=>{const range=$('#cycleRange');const day=Number(range.value);$('#dayValue').textContent=day;range.style.setProperty('--cycle-progress',((day-1)/27*100)+'%');const weekdays=lang==='zh'?['星期一','星期二','星期三','星期四','星期五','星期六','星期日']:['MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY','SUNDAY'];const weekday=weekdays[(day-1)%7];if($('#weekdayValue'))$('#weekdayValue').textContent=weekday;range.setAttribute('aria-valuetext',(lang==='zh'?'周期第 '+day+' 天，':'Cycle day '+day+', ')+weekday);};
   $('#cycleRange').addEventListener('input',updateCycle);updateCycle();
   $('#print').addEventListener('click',()=>window.print());
   $('#privacy').addEventListener('click',()=>$('#privacyDialog').showModal());
