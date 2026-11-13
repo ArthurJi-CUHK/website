@@ -25,7 +25,11 @@
       return `<p><span class="award-title">${title}${times}${years}</span>${a.year?`<time class="entry-date" datetime="${a.year}">${a.year}</time>`:''}</p>`;
     }).join('');
     $('#timeline').className='timeline';
-    $('#timeline').innerHTML=PROFILE.timeline.map(t=>`<div><h3>${t[lang][0]}</h3><time>${lang==='zh'?t.date.replace('Present','至今'):t.date}</time><p>${t[lang][1]}</p></div>`).join('');
+    $('#timeline').innerHTML=PROFILE.timeline.map(t=>{
+      const unit=t.institution;
+      const unitLink=unit?` · <a class="timeline-institution" href="${esc(unit.url)}" target="_blank" rel="noopener">${esc(unit[lang])} <span aria-hidden="true">↗</span></a>`:'';
+      return `<div><h3>${esc(t[lang][0])}${unitLink}</h3><time>${lang==='zh'?t.date.replace('Present','至今'):t.date}</time><p>${esc(t[lang][1])}</p></div>`;
+    }).join('');
     renderPapers(); updateCycle(); window.LifeGallery?.setLanguage(lang); window.ResearchDemo?.setLanguage(lang); window.SiteAnalytics?.setLanguage(lang); window.VisitorMap?.setLanguage(lang);
   }
   $('#language').addEventListener('click',()=>{lang=lang==='en'?'zh':'en';storage.set('arthur-language',lang);render();});
