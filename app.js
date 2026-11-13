@@ -21,7 +21,7 @@
     $('#moreAwards').innerHTML=PROFILE.awards.map(a=>{
       const title=esc(a[lang]).replace(/× (\d+)\b/g,(_,n)=>`× <span data-count="${n}">${n}</span>`);
       const times=a.times?` <span data-count="${a.times}">${a.times}</span>${lang==='zh'?' 次':' times'}`:'';
-      const years=a.years?`${lang==='zh'?'，':', '}${a.years.map(year=>`<time datetime="${esc(year)}">${esc(year)}</time>`).join(lang==='zh'?'、':', ')}`:'';
+      const years=a.years?`<span class="entry-date entry-date-inline">${lang==='zh'?'，':', '}${a.years.map(year=>`<time datetime="${esc(year)}">${esc(year)}</time>`).join(lang==='zh'?'、':', ')}</span>`:'';
       return `<p><span class="award-title">${title}${times}${years}</span>${a.year?`<time class="entry-date" datetime="${a.year}">${a.year}</time>`:''}</p>`;
     }).join('');
     $('#timeline').className='timeline';

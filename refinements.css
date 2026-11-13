@@ -41,6 +41,7 @@ html[data-theme="day"] #progress{color:#246c67}
 .honor h3{margin:0 22px 6px 0}.honor .year{display:block;margin-bottom:10px;font-variant-numeric:tabular-nums}
 #moreAwards .award-title{display:block;color:var(--ink)}
 #moreAwards .entry-date{display:block;margin-top:4px;color:var(--accent);font-size:10px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+#moreAwards .entry-date-inline{display:inline;margin:0}
 .timeline h3{margin:0 0 4px}.timeline time{display:block;margin-bottom:5px;font-variant-numeric:tabular-nums}
 .teaching p{grid-template-columns:minmax(0,1fr);gap:3px}
 .teaching time{grid-row:auto;font-variant-numeric:tabular-nums}
